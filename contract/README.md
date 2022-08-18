@@ -16,4 +16,158 @@ This repo is a simple implementation of an onchain DEX on Dero (dex.bas) and a n
 
 
 ### RPC calls 
-    - 
+
+#### Setup RPC calls
+    - Initialize wrapped tokens
+
+#### dex rpc calls
+    - Add Liquidity
+    
+        ```
+        {
+            "jsonrpc": "2.0",
+            "id": "1",
+            "method": "transfer",
+            "params": {
+                "scid":"dex-scid",
+                "ringsize":2,
+                "sc_rpc":[
+                    {
+                        "name":"entrypoint",
+                        "datatype":"S","value":
+                        "AddLiquidity"
+                    },
+                    {
+                        "name":"baseAsset",
+                        "datatype":"H",
+                        "value":"dero-wrapped-token-1-scid"
+                    },
+                    {
+                        "name":"qouteAsset",
+                        "datatype":"H",
+                        "value":"dero-wrapped-token-2-scid"
+                    }
+                ],
+                "transfers": [{
+                        "scid": "dero-wrapped-token-1-scid",
+                        "burn": amount-to-send-to-dex
+                },
+                {
+                        "scid": "dero-wrapped-token-2-scid",
+                        "burn": amount-to-send-to-dex
+                }]
+            }
+        }
+
+        ```
+
+        Example used during test. Note that all contracts must be deployed on the dero network.
+
+        ```
+        {
+            "jsonrpc": "2.0",
+            "id": "1",
+            "method": "transfer",
+            "params": {
+                "scid":"9f9770c3f15b28bc8b62718fb219b96b9ff50843d33b84b65b355fe8daae24ec",
+                "ringsize":2,
+                "sc_rpc":[
+                    {
+                        "name":"entrypoint",
+                        "datatype":"S",
+                        "value":"AddLiquidity"
+                    },
+                    {
+                        "name":"baseAsset",
+                        "datatype":"H",
+                        "value":"d5cb7dcb6dfa70310053bb0ddebca65494471771d12ff133711f29792d17acae"
+                    },
+                    {
+                        "name":"qouteAsset",
+                        "datatype":"H",
+                        "value":"95d78d5fe0158d527dcc8ce31ea8e97aab7f4ef7d7d7b37b55924dbebb31558d"
+                    }
+                ],
+                "transfers": [
+                {
+                    "scid": "d5cb7dcb6dfa70310053bb0ddebca65494471771d12ff133711f29792d17acae",
+                    "burn": 10000000
+                },
+                {
+                    "scid": "95d78d5fe0158d527dcc8ce31ea8e97aab7f4ef7d7d7b37b55924dbebb31558d",
+                    "burn": 10000000
+                }]
+            }
+        }
+
+        ```
+    
+    - Remove Liquidity
+
+        ```
+            {
+                "jsonrpc": "2.0",
+                "id": "1",
+                "method": "transfer",
+                "params": {
+                        "scid":"",
+                        "ringsize":2,
+                        "sc_rpc":[
+                            {
+                                "name":"entrypoint",
+                                "datatype":"S",
+                                "value":"RemoveLiquidity"
+                            },
+                            {
+                                "name":"baseAsset",
+                                "datatype":"H",
+                                "value":"dero-wrapped-token-1-scid"
+                            },
+                            {
+                                "name":"qouteAsset",
+                                "datatype":"H",
+                                "value":"dero-wrapped-token-2-scid"
+                            }
+                        ],
+                        "transfers": [{
+                                "scid": "",
+                                "burn": amount-of-lp-to-convert
+                        }]
+                }
+        }
+        ```
+
+    - Swap
+
+        ```
+            {
+                "jsonrpc": "2.0",
+                "id": "1",
+                "method": "transfer",
+                "params": {
+                    "scid":"dex-scid",
+                    "ringsize":2,
+                    "sc_rpc":[
+                        {
+                            "name":"entrypoint",
+                            "datatype":"S",
+                            "value":"Swap"
+                        },
+                        {
+                            "name":"fromAsset",
+                            "datatype":"H",
+                            "value":"source-dero-wrapped-token-scid"
+                        },
+                        {
+                            "name":"toAsset",
+                            "datatype":"H",
+                            "value":"target-dero-wrapped-token-scid"
+                            }
+                        ],
+                    "transfers": [{
+                            "scid": "dero-scid",
+                            "burn": amount-to-swap
+                    }]
+                }
+            }
+        ```
