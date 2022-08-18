@@ -21,7 +21,7 @@ This repo is a simple implementation of an onchain DEX on Dero (dex.bas) and a n
     - Initialize wrapped tokens
 
 #### dex rpc calls
-    - Add Liquidity
+- Add Liquidity
     
         ```
         {
@@ -61,7 +61,7 @@ This repo is a simple implementation of an onchain DEX on Dero (dex.bas) and a n
 
         ```
 
-        Example used during test. Note that all contracts must be deployed on the dero network.
+    Example used during test. Note that all contracts must be deployed on the dero network.
 
         ```
         {
@@ -102,7 +102,7 @@ This repo is a simple implementation of an onchain DEX on Dero (dex.bas) and a n
 
         ```
     
-    - Remove Liquidity
+- Remove Liquidity
 
         ```
             {
@@ -110,7 +110,7 @@ This repo is a simple implementation of an onchain DEX on Dero (dex.bas) and a n
                 "id": "1",
                 "method": "transfer",
                 "params": {
-                        "scid":"",
+                        "scid":"dex-scid",
                         "ringsize":2,
                         "sc_rpc":[
                             {
@@ -130,14 +130,46 @@ This repo is a simple implementation of an onchain DEX on Dero (dex.bas) and a n
                             }
                         ],
                         "transfers": [{
-                                "scid": "",
+                                "scid": "dex-scid",
                                 "burn": amount-of-lp-to-convert
                         }]
                 }
         }
         ```
-
-    - Swap
+    Example: 
+    ```
+        {
+            "jsonrpc": "2.0",
+            "id": "1",
+            "method": "transfer",
+            "params": {
+                "scid":"db810c8caf03f5ec01276339b8ae5cb24e5033203119096a4f2dd7095894a6cb",
+                "ringsize":2,
+                "sc_rpc":[
+                    {
+                        "name":"entrypoint",
+                        "datatype":"S",
+                        "value":"RemoveLiquidity"
+                    },
+                    {
+                        "name":"baseAsset",
+                        "datatype":"H",
+                        "value":"d5cb7dcb6dfa70310053bb0ddebca65494471771d12ff133711f29792d17acae"
+                    },
+                    {
+                        "name":"qouteAsset",
+                        "datatype":"H",
+                        "value":"95d78d5fe0158d527dcc8ce31ea8e97aab7f4ef7d7d7b37b55924dbebb31558d"
+                    }
+                ],
+                "transfers": [{
+                    "scid": "db810c8caf03f5ec01276339b8ae5cb24e5033203119096a4f2dd7095894a6cb",
+                    "burn": 1000
+                }]
+            }
+        }
+    ```
+- Swap
 
         ```
             {
